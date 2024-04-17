@@ -151,9 +151,25 @@ void login()
  {
   string username, user, password, passw;
   cout << "Welcome " << userID << "\nSuccessful Login !\n";
-  server();
-  cout << "You are now being redirected to the server" << endl;
-  client(userID);
+  cout << "\n| Press 1 to Activate the server" << endl;
+  cout << "| Press 2 to connect to the server           " << endl;
+  cin >> option;
+  switch (option)
+  {
+  case 1:
+   server();
+   cout << "| Press 3 to Exit      " << endl;
+   cin >> option;
+   if (option == 3)
+   {
+    break;
+   }
+  case 2:
+   cout << "You are now being connected to the server" << endl;
+   client(userID);
+  default:
+   break;
+  }
  }
  // else login failed
  else
