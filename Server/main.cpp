@@ -26,6 +26,7 @@ int acceptedSocketsCount = 0;
 
 int server()
 {
+
         // creating socket
         int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -37,7 +38,13 @@ int server()
         serverAddress.sin_addr.s_addr = INADDR_ANY;
 
         // binding socket.
-        bind(serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
+        int binding = bind(serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
+
+        if (binding != 0)
+        {
+                perror("Error Binding Port");
+                abort();
+        }
 
         // listening to the assigned socket
         listen(serverSocket, 5);
@@ -56,6 +63,7 @@ int server()
 
 void *receiveAndPrintIncomingData(void *socketFD)
 {
+
         int fd = *((int *)socketFD);
         // recieving data
         char buffer[1024];

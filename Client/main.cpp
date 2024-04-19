@@ -9,7 +9,8 @@
 using namespace std;
 
 void startListeningAndPrintMessages(int socketFD);
-
+string decryptCaesar(const string &ciphertext);
+string encryptCaesar(const string &plaintext);
 void *listenAndPrint(void *socketFD);
 
 int client(string username)
@@ -46,21 +47,23 @@ int client(string username)
         size_t lineSize = 0;
         cout << "Hello " << username << " Enter your Message: ";
 
-        startListeningAndPrintMessages(clientSocket);
+        pthread_t id;
+        pthread_create(&id, NULL, listenAndPrint, (void *)(intptr_t)clientSocket); // Moved here
 
         char buffer[1024];
 
         while (true)
         {
+                string encryptedMessage = "";
 
                 ssize_t charCount = getline(&line, &lineSize, stdin);
-                sprintf(buffer, "%s:%s", username.c_str(), line);
-
                 if (charCount > 0)
                 {
                         if (strcmp(line, "exit\n") == 0)
                                 break;
-                        ssize_t amountWasSent = send(clientSocket, buffer, strlen(buffer), 0);
+                        snprintf(buffer, sizeof(buffer), "%s:%s", username.c_str(), line);
+                        string encryptedMessage = encryptCaesar(buffer);
+                        ssize_t amountWasSent = send(clientSocket, encryptedMessage.c_str(), strlen(encryptedMessage.c_str()), 0);
                 }
         }
 
@@ -82,16 +85,37 @@ void *listenAndPrint(void *socketFD)
         while (true)
         {
                 ssize_t amountRecieved = recv(fd, buffer, sizeof(buffer), 0);
-
                 if (amountRecieved > 0)
                 {
-                        buffer[amountRecieved] = 0;
-                        cout << buffer << endl;
+                        buffer[amountRecieved] = '\0';
+                        string decryptedMessage = decryptCaesar(buffer);
+                        cout << decryptedMessage << endl;
                 }
-
                 if (amountRecieved == 0)
                         break;
         }
         close(fd);
         return NULL;
+}
+
+string encryptCaesar(const string &plaintext)
+{
+        string ciphertext = "";
+        for (int i = 0; i < plaintext.size(); i++)
+        {
+                char e = plaintext[i] + 3; // Shift each character by 3
+                ciphertext += e;
+        }
+        return ciphertext;
+}
+
+string decryptCaesar(const string &ciphertext)
+{
+        string plaintext = "";
+        for (int i = 0; i < ciphertext.size(); i++)
+        {
+                char e = ciphertext[i] - 3; // Shift each character back by 3
+                plaintext += e;
+        }
+        return plaintext;
 }
