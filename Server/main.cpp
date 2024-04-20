@@ -24,7 +24,7 @@ void startAcceptingIncomingConnections(int serverSocket);             // Starts 
 void sendReceivedMessageToOtherClients(char *buffer, void *socketFD); // Sends received messages to other clients
 
 // Array to store information about accepted sockets
-struct AcceptedSocket accepetedSockets[10];
+struct AcceptedSocket acceptedSockets[10];
 int acceptedSocketsCount = 0; // Counter to keep track of the number of accepted sockets
 
 // Main server function
@@ -93,10 +93,10 @@ void sendReceivedMessageToOtherClients(char *buffer, void *socketFD)
         for (int i = 0; i < acceptedSocketsCount; i++)
         {
                 // Check if the socket is not the sender's socket
-                if (accepetedSockets[i].acceptedSocketFD != senderSocketFD)
+                if (acceptedSockets[i].acceptedSocketFD != senderSocketFD)
                 {
                         // Send the message to other clients
-                        send(accepetedSockets[i].acceptedSocketFD, buffer, strlen(buffer), 0);
+                        send(acceptedSockets[i].acceptedSocketFD, buffer, strlen(buffer), 0);
                 }
         }
 }
@@ -137,7 +137,7 @@ void acceptNewConnectionAndReceiveAndPrintData(int serverSocket)
                 struct AcceptedSocket *clientSocket = acceptingIncomingConnection(serverSocket);
 
                 // Add the accepted socket information to the array
-                accepetedSockets[acceptedSocketsCount++] = *clientSocket;
+                acceptedSockets[acceptedSocketsCount++] = *clientSocket;
 
                 // Start a new thread to handle data reception for the client
                 pthread_t id;
