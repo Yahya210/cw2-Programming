@@ -157,6 +157,7 @@ void login()
   switch (option)
   {
   case 1:
+   // Activating Server
    server();
    cout << "| Press 3 to Exit      " << endl;
    cin >> option;
@@ -165,6 +166,7 @@ void login()
     break;
    }
   case 2:
+   // Connecting to The Server
    cout << "You are now being connected to the server" << endl;
    client(userID);
   default:
