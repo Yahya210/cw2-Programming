@@ -1,9 +1,9 @@
-#include <cstring>
-#include <iostream>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <pthread.h>
+#include <cstring>      // For C-style string manipulation functions
+#include <iostream>     // For input/output stream operations
+#include <netinet/in.h> // For internet address family, sockaddr_in structure
+#include <sys/socket.h> // For socket related functions
+#include <unistd.h>     // For POSIX operating system API
+#include <pthread.h>    // For POSIX threads
 
 using namespace std;
 
