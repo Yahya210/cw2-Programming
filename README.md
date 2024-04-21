@@ -45,6 +45,12 @@ Command-line application written in C++ with the following features:
         <div>In the screenshot below, it shows the first user 'lls' hosts the server, while 'user1' and 'user2' connects to the server, and 'lls' can't see the messages as they're encrypted and they are to be decrypted by the recepient only</div>
         <div align="center"><img width="1167" alt="Screenshot 2024-04-19 at 2 41 54 PM" src="https://github.com/Yahya210/cw2-Programming/assets/114566232/d2d5bfe6-2b59-41ac-8618-7124da16d68c"></div>
     </ol>
+
+
+## Encryption Verification
+To verify that Messages sent to the server have to be encrypted and are to be decrypted by the recipient, i used wire shark which shows that the conversation is encrypted through network traffic as well
+<div align="center"><img width="636" alt="image" src="https://github.com/Yahya210/cw2-Programming/assets/114566232/0950fc70-f9ff-40b2-9dbd-407bd1199e46"></div>
+
     
 ## List of Dependencies
 
